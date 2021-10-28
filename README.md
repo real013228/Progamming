@@ -1,2 +1,1 @@
-# Progamming
-This is my repository for programming
+I did it for DC lab. Let's start!
