@@ -1,38 +1,37 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #define YEAR 365 * DAY
-#define MONTH 30 * 24 * 60 * 60
+#define MONTH (30 * 24 * 60 * 60)
 #define DAY 86400
 #define HOUR 3600
 #define MINUTE 60
-#define BUFFSIZE 400
-#define STRSIZE 1000
-#define JUSTTWOMILLION 2000000
-long long arr[JUSTTWOMILLION];
+#define buffSize 400
+#define strSize 1000
+#define justTwoMillions 2000000
+long long arr[justTwoMillions];
 int main() {
     char *filename1 = "C:\\Users\\real0\\Downloads\\NASA_access_log_Jul95\\access_log_Jul95";
-    char *filename2 = "arm";
-    char str[STRSIZE];
+//    char *filename2 = "arm";
+    char str[strSize];
     int ans1 = 0;
     FILE *f1;
     if ((f1 = fopen(filename1, "r")) == NULL) {
-        perror("Error occured while opening file");
+        perror("Error occurred while opening file");
         return 1;
     }
-    //long long *arr = (long long *) malloc(JUSTTWOMILLION * sizeof(long long));
+    //long long *arr = (long long *) malloc(justTwoMillions * sizeof(long long));
     // пока не дойдем до конца, считываем по 256 байт
     int cnt = 0;
-    int status = 0;
-    while ((fgets(str, STRSIZE, f1)) != NULL && cnt < 1891714) {
-        // записываем строкu
+    while ((fgets(str, strSize, f1)) != NULL && cnt < 1891714) {
+        // записываем строки
         char
-                remote_addr[BUFFSIZE] = {0},
-                local_time[BUFFSIZE] = {0},
-                request[BUFFSIZE] = {0},
-                timeZone[BUFFSIZE] = {0},
-                bytes_send[BUFFSIZE] = {0},
-                status1[BUFFSIZE] = {0};
+                remote_adr[buffSize] = {0},
+                local_time[buffSize] = {0},
+                request[buffSize] = {0},
+                timeZone[buffSize] = {0},
+                bytes_send[buffSize] = {0},
+                status1[buffSize] = {0};
         int ind1 = 0;
         while (str[ind1] != '\"') {
             ind1 += 1;
@@ -47,7 +46,7 @@ int main() {
         ind1 = 0;
         ind2 = 2;
 //        printf("request : %s\n", request);
-        sscanf(str, "%s - - %s %s", remote_addr, local_time, timeZone);
+        sscanf(str, "%s - - %s %s", remote_adr, local_time, timeZone);
         while (str[strlen(str) - ind1 - 1] != ' ') {
             bytes_send[ind1] = str[strlen(str) - ind1 - 1];
             ind1 += 1;
@@ -125,31 +124,24 @@ int main() {
 //        if(ans1 == 1891713 || ans1 == 1){
 //            printf("%s\n", str);
 //        }
-//        fprintf(f2,"%llu %llu %llu %llu %llu %llu\n", day, month, year, hour, minute, second);
-//        fprintf(f2, "%llu\n", second + minute + hour + day + month + year);
-        if(cnt == 1891713){
-            printf("%s",str);
-        } else{
-            arr[cnt] = second + minute + hour + day + month + year;
-        }
+        arr[cnt] = second + minute + hour + day + month + year;
         cnt++;
 //        printf("%d\n", cnt);
     }
     long long timeInterval;
     long long maxi = 0;
+    int j = 0;
+    printf("Type your time interval:\n");
     scanf("%lld", &timeInterval);
-    for(long long i = 0; i < cnt - 1; i++){
-        long long j = i + 1;
-        long long ans = 0;
-        while(arr[j] - arr[i] <= timeInterval && j < cnt){
-            ans = j - i + 1;
+    for(long int i = 0; i < cnt - 1; i++){
+        while(arr[i] - arr[j] > timeInterval && j < cnt){
             j++;
         }
-        if(ans > maxi){
-            maxi = ans;
+        if(i - j + 1 > maxi){
+            maxi = i - j + 1;
         }
     }
-    printf("%d %lld\n", ans1, maxi);
+    printf("Count of requests with 5xx errors: %d\nMax count of requests in this time interval: %lld\n", ans1, maxi);
     fclose(f1);
     return 0;
 }
