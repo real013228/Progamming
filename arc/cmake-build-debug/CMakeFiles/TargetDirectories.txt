@@ -1,0 +1,3 @@
+C:/Users/real0/CLionProjects/arc/cmake-build-debug/CMakeFiles/arc.dir
+C:/Users/real0/CLionProjects/arc/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/real0/CLionProjects/arc/cmake-build-debug/CMakeFiles/rebuild_cache.dir
