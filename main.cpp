@@ -311,6 +311,13 @@ private:
     double* coeffs_;
 public:
     Polynomial() = default;
+    Polynomial(int size){
+        degree_ = size;
+        coeffs_ = new double[size];
+        for(size_t i = 0; i < size; i++){
+            coeffs_[i] = 0;
+        }
+    }
     Polynomial(int degree, const double* coeffs){
         degree_ = degree;
         coeffs_ = new double[degree_];
@@ -392,6 +399,7 @@ public:
         }
         return *result;
     }
+
 
     Polynomial& operator += (const Polynomial& other){
         this->degree_ = max(degree_, other.degree_);
@@ -496,8 +504,23 @@ public:
         degree_ = 0;
         delete[] coeffs_;
     }
-
+    friend std::ostream& operator << (std::ostream& out, const Polynomial& poly);
+    friend std::istream& operator >> (std::istream& in, Polynomial& poly);
 };
+
+std::ostream& operator << (std::ostream& out, const Polynomial& poly) {
+    for (size_t i = 0; i < poly.degree_; i++) {
+        out << poly.coeffs_[i] << ' ';
+    }
+    return out;
+}
+
+std::istream& operator >> (std::istream& in, Polynomial& poly){
+    for(size_t i = 0; i < poly.degree_; i++){
+        in >> poly.coeffs_[i];
+    }
+    return in;
+}
 
 int main() {
 
@@ -554,12 +577,20 @@ int main() {
 
 //Polynomials **********************************
     double arr1[4] = {1, 2, 3, 4};
-    double arr2[4] = {1, 2, 3, 5};
+    double arr2[7] = {1, 2, 3, 5, 2, 3, 4};
     Polynomial poly1(4, arr1);
-    Polynomial poly2(4, arr2);
+    Polynomial poly2(7, arr2);
     poly1 = poly2 / 3;
-    poly1.printCoeffs();
 
+
+    int size1;
+    std::cout << "Enter degree of polynomial\n";
+    std::cin >> size1;
+    Polynomial poly0(size1);
+    std::cin >> poly0;
+    std::cout << poly0 << '\n';
+    poly0 = poly2;
+    std::cout << poly0 << '\n';
 //    std::cout << poly1[0] << ' ' << poly1[1] << ' ' << poly1[2] << '\n';
 //    poly1 = poly1 >> 1;
 //    std::cout << poly1[0] << ' ' << poly1[1] << ' ' << poly1[2] << '\n';
