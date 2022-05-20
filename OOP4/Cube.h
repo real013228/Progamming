@@ -19,12 +19,13 @@
 
 
 class Cube {
-public:
+private:
     unsigned int faces_[6]{};
     SmallCube cube_[3][3][3];
     std::vector<unsigned int> scramble;
-    std::vector<std::string > solveScramble;
 public:
+    std::vector<std::string> solveScramble;
+
     double size_{};
 
     Cube() = default;
@@ -1077,7 +1078,7 @@ public:
     }
 
     bool upperLayerFitness() {
-        if(cube_[0][0][2].getFaces()[0] == WHITE_SIDE &&
+        if (cube_[0][0][2].getFaces()[0] == WHITE_SIDE &&
             cube_[2][0][2].getFaces()[0] == WHITE_SIDE &&
             cube_[2][2][2].getFaces()[0] == WHITE_SIDE &&
             cube_[0][2][2].getFaces()[0] == WHITE_SIDE) {
@@ -1087,8 +1088,10 @@ public:
     }
 
     bool cubeIsSolved() {
-        if(crossFitness() && firstLayerFitness() && secondLayerFitness() && upperCornersFitness() && upperLayerFitness()
-        && cube_[0][0][2].getFaces()[2] == GREEN_SIDE && cube_[1][0][2].getFaces()[2] == GREEN_SIDE && cube_[2][0][2].getFaces()[2] == GREEN_SIDE) {
+        if (crossFitness() && firstLayerFitness() && secondLayerFitness() && upperCornersFitness() &&
+            upperLayerFitness()
+            && cube_[0][0][2].getFaces()[2] == GREEN_SIDE && cube_[1][0][2].getFaces()[2] == GREEN_SIDE &&
+            cube_[2][0][2].getFaces()[2] == GREEN_SIDE) {
             return true;
         }
         return false;
@@ -1100,6 +1103,7 @@ public:
         rotateRight();
         rotateDown();
     }
+
     void crossEdgesSorting() {
         rotateLeft();
         rotateDown();
@@ -1109,26 +1113,29 @@ public:
         rotateDown(2);
         rotateLeft(3);
         int safeCompNum = 0;
-        while(this->cube_[1][0][0].getFaces()[2] != this->cube_[1][0][1].getFaces()[2] && safeCompNum++ < 4) {
+        while (this->cube_[1][0][0].getFaces()[2] != this->cube_[1][0][1].getFaces()[2] && safeCompNum++ < 4) {
             rotateDown();
         }
     }
+
     void piwPawRight(int cnt = 1) {
-        for(size_t i = 0; i < cnt; ++i) {
+        for (size_t i = 0; i < cnt; ++i) {
             rotateRight();
             rotateUp();
             rotateRight(3);
             rotateUp(3);
         }
     }
+
     void piwPawLeft(int cnt = 1) {
-        for(size_t i = 0; i < cnt; ++i) {
+        for (size_t i = 0; i < cnt; ++i) {
             rotateFront(3);
             rotateUp(3);
             rotateFront();
             rotateUp();
         }
     }
+
     void upperCrossEdgesSorting() {
         rotateRight();
         rotateUp();
@@ -1138,6 +1145,7 @@ public:
         rotateUp(2);
         rotateRight(3);
     }
+
     void upperCornerSorting() {
         rotateRight();
         rotateUp(3);
@@ -1148,8 +1156,9 @@ public:
         rotateLeft();
         rotateUp();
     }
+
     void putTheEdge(char letter) {
-        if(letter == 'r') {
+        if (letter == 'r') {
             rotateUp(3);
             rotateLeft(3);
             rotateUp();
@@ -1158,7 +1167,7 @@ public:
             rotateFront();
             rotateUp(3);
             rotateFront(3);
-        } else if(letter == 'l') {
+        } else if (letter == 'l') {
             rotateUp();
             rotateRight();
             rotateUp(3);
@@ -1169,15 +1178,16 @@ public:
             rotateFront();
         }
     }
+
     void solveCross() {
-        if(this->cube_[1][0][0].getFaces()[2] == GREEN_SIDE &&
-           this->cube_[1][0][0].getFaces()[1] == YELLOW_SIDE &&
-           this->cube_[2][1][0].getFaces()[5] == RED_SIDE &&
-           this->cube_[2][1][0].getFaces()[1] == YELLOW_SIDE &&
-           this->cube_[1][2][0].getFaces()[3] == BLUE_SIDE &&
-           this->cube_[1][2][0].getFaces()[1] == YELLOW_SIDE &&
-           this->cube_[0][1][0].getFaces()[4] == ORANGE_SIDE &&
-           this->cube_[0][1][0].getFaces()[1] == YELLOW_SIDE) {
+        if (this->cube_[1][0][0].getFaces()[2] == GREEN_SIDE &&
+            this->cube_[1][0][0].getFaces()[1] == YELLOW_SIDE &&
+            this->cube_[2][1][0].getFaces()[5] == RED_SIDE &&
+            this->cube_[2][1][0].getFaces()[1] == YELLOW_SIDE &&
+            this->cube_[1][2][0].getFaces()[3] == BLUE_SIDE &&
+            this->cube_[1][2][0].getFaces()[1] == YELLOW_SIDE &&
+            this->cube_[0][1][0].getFaces()[4] == ORANGE_SIDE &&
+            this->cube_[0][1][0].getFaces()[1] == YELLOW_SIDE) {
             return;
         } else {
             //only one move
@@ -1309,8 +1319,9 @@ public:
             rotateDown(3);
         }
     }
+
     void solveFirstLayer() {
-        while(!firstLayerFitness()) {
+        while (!firstLayerFitness()) {
             for (size_t i = 0; i < 8; ++i) {
                 int cnt = 0;
                 if (cube_[2][0][2].getFaces()[2] == YELLOW_SIDE) {
@@ -1391,22 +1402,25 @@ public:
             std::cout << "something has wrong\n";
         }
     }
+
     void solveSecondLayer() {
         int safeNum = 0;
-        if(secondLayerFitness()) {
+        if (secondLayerFitness()) {
 //            std::cout << "The second layer has been solved\n";
             return;
         } else {
             while (!secondLayerFitness()) {
                 safeNum++;
                 for (size_t i = 0; i < 8; ++i) {
-                    if (cube_[1][0][2].getFaces()[2] == cube_[1][0][0].getFaces()[2] && cube_[1][0][2].getFaces()[0] != WHITE_SIDE) {
+                    if (cube_[1][0][2].getFaces()[2] == cube_[1][0][0].getFaces()[2] &&
+                        cube_[1][0][2].getFaces()[0] != WHITE_SIDE) {
                         if (cube_[1][0][2].getFaces()[0] == cube_[0][1][0].getFaces()[4]) {
                             putTheEdge('r');
                         } else if (cube_[1][0][2].getFaces()[0] == cube_[2][1][0].getFaces()[5]) {
                             putTheEdge('l');
                         }
-                    } else if (cube_[2][1][2].getFaces()[5] == cube_[2][1][0].getFaces()[5] && cube_[2][1][2].getFaces()[0] != WHITE_SIDE) {
+                    } else if (cube_[2][1][2].getFaces()[5] == cube_[2][1][0].getFaces()[5] &&
+                               cube_[2][1][2].getFaces()[0] != WHITE_SIDE) {
                         if (cube_[2][1][2].getFaces()[0] == cube_[1][0][0].getFaces()[2]) {
                             rotateUp(3);
                             rotateFront(3);
@@ -1426,7 +1440,8 @@ public:
                             rotateUp();
                             rotateRight();
                         }
-                    } else if (cube_[1][2][2].getFaces()[3] == cube_[1][2][0].getFaces()[3] && cube_[1][2][2].getFaces()[0] != WHITE_SIDE) {
+                    } else if (cube_[1][2][2].getFaces()[3] == cube_[1][2][0].getFaces()[3] &&
+                               cube_[1][2][2].getFaces()[0] != WHITE_SIDE) {
                         if (cube_[1][2][2].getFaces()[0] == cube_[0][1][0].getFaces()[4]) {
                             rotateUp();
                             rotateLeft();
@@ -1446,7 +1461,8 @@ public:
                             rotateUp(3);
                             rotateBack(3);
                         }
-                    } else if (cube_[0][1][2].getFaces()[4] == cube_[0][1][0].getFaces()[4] && cube_[0][1][2].getFaces()[0] != WHITE_SIDE) {
+                    } else if (cube_[0][1][2].getFaces()[4] == cube_[0][1][0].getFaces()[4] &&
+                               cube_[0][1][2].getFaces()[0] != WHITE_SIDE) {
                         if (cube_[0][1][2].getFaces()[0] == cube_[1][2][0].getFaces()[3]) {
                             rotateUp(3);
                             rotateBack(3);
@@ -1470,16 +1486,19 @@ public:
                         rotateUp();
                     }
                 }
-                if(cube_[2][0][1].getFaces()[2] != cube_[1][0][1].getFaces()[2] || cube_[2][0][1].getFaces()[5] != cube_[2][1][1].getFaces()[5]) {
+                if (cube_[2][0][1].getFaces()[2] != cube_[1][0][1].getFaces()[2] ||
+                    cube_[2][0][1].getFaces()[5] != cube_[2][1][1].getFaces()[5]) {
                     piwPawRight();
                     piwPawLeft();
                     continue;
                 }
-                if(cube_[0][0][1].getFaces()[2] != cube_[1][0][1].getFaces()[2] || cube_[0][0][1].getFaces()[4] != cube_[0][1][1].getFaces()[4]) {
+                if (cube_[0][0][1].getFaces()[2] != cube_[1][0][1].getFaces()[2] ||
+                    cube_[0][0][1].getFaces()[4] != cube_[0][1][1].getFaces()[4]) {
                     putTheEdge('r');
                     continue;
                 }
-                if(cube_[2][2][1].getFaces()[5] != cube_[2][1][1].getFaces()[5] || cube_[2][2][1].getFaces()[3] != cube_[1][2][1].getFaces()[3]) {
+                if (cube_[2][2][1].getFaces()[5] != cube_[2][1][1].getFaces()[5] ||
+                    cube_[2][2][1].getFaces()[3] != cube_[1][2][1].getFaces()[3]) {
                     rotateRight(3);
                     rotateUp();
                     rotateRight();
@@ -1489,7 +1508,8 @@ public:
                     rotateBack(3);
                     continue;
                 }
-                if(cube_[0][2][1].getFaces()[4] != cube_[0][1][1].getFaces()[4] || cube_[0][2][1].getFaces()[3] != cube_[1][2][1].getFaces()[3]) {
+                if (cube_[0][2][1].getFaces()[4] != cube_[0][1][1].getFaces()[4] ||
+                    cube_[0][2][1].getFaces()[3] != cube_[1][2][1].getFaces()[3]) {
                     rotateLeft();
                     rotateUp();
                     rotateLeft(3);
@@ -1500,15 +1520,16 @@ public:
                     continue;
                 }
             }
-            if(secondLayerFitness()) {
+            if (secondLayerFitness()) {
                 std::cout << "The second layer has been solved\n";
             } else {
                 std::cout << "something has wrong\n";
             }
         }
     }
+
     void solveUpperCross() {
-        if(!upperCrossFitness()) {
+        if (!upperCrossFitness()) {
             if (cube_[0][1][2].getFaces()[0] != WHITE_SIDE && cube_[1][2][2].getFaces()[0] != WHITE_SIDE &&
                 cube_[2][1][2].getFaces()[0] != WHITE_SIDE && cube_[1][0][2].getFaces()[0] != WHITE_SIDE) {
                 rotateFront();
@@ -1519,7 +1540,7 @@ public:
                 piwPawRight();
                 rotateFront(3);
             }
-            while(!upperCrossWithoutEdgesFitness()) {
+            while (!upperCrossWithoutEdgesFitness()) {
                 if (cube_[1][0][2].getFaces()[0] == WHITE_SIDE) {
                     if (cube_[1][2][2].getFaces()[0] == WHITE_SIDE) {
                         rotateUp();
@@ -1575,22 +1596,22 @@ public:
                     }
                 }
             } else {
-                while(cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
+                while (cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
                     rotateUp();
                 }
                 std::cout << "The upper cross has been solved\n";
             }
-        }
-        else {
-            while(cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
+        } else {
+            while (cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
                 rotateUp();
             }
             std::cout << "The upper cross has been solved\n";
         }
 
     }
+
     void solveUpperCorners() {
-        while(!upperCornersFitness()) {
+        while (!upperCornersFitness()) {
             int safeNum = 0;
             while (!upperCornersFitness() && safeNum < 4) {
                 safeNum++;
@@ -1615,25 +1636,27 @@ public:
                 upperCornerSorting();
             }
         }
-        while(cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
+        while (cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
             rotateUp();
         }
     }
+
     void lastPiwPaws() {
-        while(!upperLayerFitness()) {
-            while(cube_[2][0][2].getFaces()[0] != WHITE_SIDE) {
+        while (!upperLayerFitness()) {
+            while (cube_[2][0][2].getFaces()[0] != WHITE_SIDE) {
                 upperPiwPaw();
             }
             rotateUp();
         }
-        while(cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
+        while (cube_[1][0][2].getFaces()[2] != GREEN_SIDE) {
             rotateUp();
         }
     }
+
     void solveCrossRandomly() {
         int cnt = 0;
         srand(time(0));
-        while(!this->crossFitness() && cnt++ < 100000) {
+        while (!this->crossFitness() && cnt++ < 100000) {
             unsigned int rot = this->randomGod();
             switch (rot) {
                 case 0:

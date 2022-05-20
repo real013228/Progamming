@@ -10,7 +10,7 @@
 
 class SmallCube {
 private:
-    unsigned int faces[6]{}; //верх, низ, спереди, сзади, слева, справа
+    unsigned int faces[FACESCOUNT]{}; //верх, низ, спереди, сзади, слева, справа
 public:
     GLfloat size_;
 
@@ -23,7 +23,7 @@ public:
 
     SmallCube(double size, const unsigned int *colors) {
         size_ = size;
-        for (size_t i = 0; i < 6; ++i) {
+        for (size_t i = 0; i < FACESCOUNT; ++i) {
             faces[i] = colors[i];
             std::cout << faces[i] << '\n';
         }
@@ -142,9 +142,11 @@ public:
         glEnd();
         glPopMatrix();
     }
-    unsigned int* getFaces() {
+
+    unsigned int *getFaces() {
         return faces;
     }
+
 private:
     unsigned char _color[4]{};
 };

@@ -6,18 +6,48 @@
 #include <vector>
 #include <fstream>
 #define outPath "C:/Users/real0/CLionProjects/OOP4/output.txt"
-//                    (верх,_____низ,____впереди,___сзади,_____лево,_____право)
-unsigned int c[6] = {0xFFFFFF, 0xFFFF00, 0x00FF00, 0x0000FF, 0xFFA500, 0xFF0000};
 
-//Data
+//********Data*******************
+
+unsigned int c[6] = {0xFFFFFF, 0xFFFF00, 0x00FF00, 0x0000FF, 0xFFA500, 0xFF0000};
 const std::string inPath = R"(C:\Users\real0\CLionProjects\OOP4\input.txt)";
 static Cube cube(1, c);
 SmallCube smallCube(1, c);
 int timerOn = 0;
 float x_pos = 0;
-//***************************
-void reading();
+
+//********Main functions*********
+
 void display();
+void timer(int);
+void reshape(int w, int h);
+void keyboard(unsigned char key, int x, int y);
+void solvingDraw();
+void displayForRandom();
+void init();
+void cubeSolvingFromFile();
+
+
+
+int main(int argc, char **argv) {
+    cubeSolvingFromFile();
+
+//****************************
+
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+    glutInitWindowSize(1080, 1080);
+    glutInitWindowPosition(1, 1);
+    glutCreateWindow("Cube");
+    glutDisplayFunc(display);
+//    glutDisplayFunc(displayForRandom);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard);
+    glutTimerFunc(0, timer, 0);
+    init();
+    glutMainLoop();
+    return 0;
+}
 
 void timer(int) {
     glutPostRedisplay();
@@ -76,7 +106,7 @@ void keyboard(unsigned char key, int x, int y) {
             break;
         default:
             std::cout << "click to the right button\n";
-            
+
     }
 }
 
@@ -123,7 +153,8 @@ void solvingDraw() {
         }
     }
 }
-void display() {
+
+void displayForRandom() {
     glClear(GL_COLOR_BUFFER_BIT );
     glLoadIdentity();
     cube.setRandomScramble();
@@ -137,33 +168,29 @@ void display() {
     glutSwapBuffers();
 }
 
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT );
+    glLoadIdentity();
+    if(cube.cubeIsSolved()) {
+
+    } else {
+        solvingDraw();
+        cube.draw();
+        glutSwapBuffers();
+    }
+}
+
 void init() {
     glClearColor(0.7, 1, 0.7, 0);
 }
 
-int main(int argc, char **argv) {
-//    cube.setPosition(inPath);
-//    cube.solveCross();
-//    cube.solveFirstLayer();
-//    cube.solveSecondLayer();
-//    cube.solveUpperCross();
-//    cube.solveUpperCorners();
-//    cube.lastPiwPaws();
-//    cube.setPosition(inPath);
-//****************************
-//    cube.setPosition(outPath);
-//    cube.setRandomScramble();
-//    cube.solveCross();
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-    glutInitWindowSize(1080, 1080);
-    glutInitWindowPosition(1, 1);
-    glutCreateWindow("Cube");
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutKeyboardFunc(keyboard);
-    glutTimerFunc(0, timer, 0);
-    init();
-    glutMainLoop();
-    return 0;
+void cubeSolvingFromFile() {
+    cube.setPosition(inPath);
+    cube.solveCross();
+    cube.solveFirstLayer();
+    cube.solveSecondLayer();
+    cube.solveUpperCross();
+    cube.solveUpperCorners();
+    cube.lastPiwPaws();
+    cube.setPosition(inPath);
 }
