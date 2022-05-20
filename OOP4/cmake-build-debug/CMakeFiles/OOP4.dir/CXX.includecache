@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/real0/CLionProjects/OOP4/Cube.h
+SmallCube.h
+C:/Users/real0/CLionProjects/OOP4/SmallCube.h
+cstdlib
+-
+iostream
+-
+vector
+-
+fstream
+-
+ctime
+-
+
+C:/Users/real0/CLionProjects/OOP4/SmallCube.h
+GL/glut.h
+C:/Users/real0/CLionProjects/OOP4/GL/glut.h
+iostream
+-
+
+C:/Users/real0/CLionProjects/OOP4/main.cpp
+Cube.h
+C:/Users/real0/CLionProjects/OOP4/Cube.h
+ctime
+-
+cstdlib
+-
+GL/glut.h
+C:/Users/real0/CLionProjects/OOP4/GL/glut.h
+iostream
+-
+vector
+-
+fstream
+-
+

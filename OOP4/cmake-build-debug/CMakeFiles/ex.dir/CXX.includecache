@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/real0/CLionProjects/OOP4/example.cpp
+GL/gl.h
+-
+GL/glut.h
+-
+GL/glu.h
+-
+vector
+-
+
